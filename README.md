@@ -1,15 +1,14 @@
-# Welcome to the Weather-Chatbot for [Wizyroom](https://app.wizyroom.io/secured/login?next_uri=Lw%3D%3D)
+# Welcome to the News-incoming-webhook for [Wizyroom](https://app.wizyroom.io/secured/login?next_uri=Lw%3D%3D)
 
-Weather-Chatbot is a Node.js chatbot for [Wizyroom](https://app.wizyroom.io/secured/login?next_uri=Lw%3D%3D). 
+News-incoming-webhook is a Node.js chatbot for [Wizyroom](https://app.wizyroom.io/secured/login?next_uri=Lw%3D%3D). 
 In this example we propose to use [Ngrok](https://ngrok.com/download): a secure introspectable tunnels to your localhost, to test your chatbot locally without deploying it.
 
 ![chatbot](https://sites.google.com/a/wizy.io/sand/sandbox/wather.gif)
 
 ## Requirement
 
-* [APIXU](https://www.apixu.com/)
 * [Wizyroom account](https://app.wizyroom.io/admin/integrations/chatbots)
-* [Weather-Chatbot](https://github.com/WizyRoom/1.weather-chatbot)
+* [News-incoming-webhook](https://github.com/WizyRoom/3.news-incoming-webhook)
 * [Ngrok](https://ngrok.com/download)
 * [Heroku](https://www.heroku.com)
 
@@ -46,8 +45,8 @@ app.get('/', function(req, res, next) {
 `req.body` contain the posted data.
 
 ```javascript
-app.post('/chatbot', function(req, res, next) {
-    operations.botOperation(req, res)
+app.get('/news', function(req, res){
+    operation.getNews(req, res)
 });
 ```
 
@@ -56,42 +55,36 @@ app.post('/chatbot', function(req, res, next) {
 * This simple application will return weather for country specified by the user everytime the chatbot is triggered in **Wizyroom**
 
 ```javascript
-function getWeather(req, res){
+function getNews(req, res){
 
-    var data =     req.body;
-    var message =  data.message;
-    var bot =      data.bot;
-    var token =    data.token;
-    var apiKey =   'cacdf29dc2be47d484a105606152306'; //Weather API key change it with yours
-    var is_reply = true;
+    // News API Key
+    var apiKey = '1d09b3429678432f9ce362e979ee6cab'; //News API key change it with yours
+    // News Path
+    var path = 'https://newsapi.org/v1/sources?language=en&apiKey=' + apiKey + '&category=technology';
 
-    var country = message.body.replace(bot.mention_text , ""); //Get the country name from message recieved
-    var path = 'http://api.apixu.com/v1/current.json?key=' + apiKey + '&q=' + country.trim();
-
-    //Send request to apixu API and handel response to send result back to Wizyroom
     request.get(
         path,
-        { 
-            json: {},   
+        {
+            json: {},
             headers: {}
-        },
-        function (error, response, body) {
+        },function (error, response, body) {
+            console.log(response.statusCode)
+            console.log(error)
             if (!error && response.statusCode == 200) {
-                var replyMsg = "Weather for "+country.trim()+" is: \n"+
-                               " • Temp(°C) = " + body.current.temp_c + "°\n"+
-                               " • Condition = " + body.current.condition.text + "\n"+
-                               " • Humidity  = " + body.current.humidity +"%"
-                res.status(200).send({'body': replyMsg, 'is_reply':is_reply});
+                var lastNews = "Name : " +body.sources[0].name + "\nDescription : " + body.sources[0].description + "\nUrl : " + body.sources[0].url ;
+                botApi.botMessage(lastNews);
+                res.status(200).send("OK");
             }else{
                 console.log("error")
                 res.status(500).send({'body': "server error, conversation not updated", 'status': "error"});
             }
         }
     );
+
 }
 ```
 
-The chatbot reply depends on the country specified by the user to the bot. The chatted country is sent to [APIXU](https://www.apixu.com/) then APIXU response is formated and sent back to Wizyroom user.
+The chatbot will send news every time the url /news is called.
 
 ## Deployment
 
