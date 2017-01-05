@@ -7,6 +7,7 @@ In this example we propose to use [Ngrok](https://ngrok.com/download): a secure 
 
 ## Requirement
 
+* [News API](https://newsapi.org/)
 * [Wizyroom account](https://app.wizyroom.io/admin/integrations/chatbots)
 * [News-incoming-webhook](https://github.com/WizyRoom/3.news-incoming-webhook)
 * [Ngrok](https://ngrok.com/download)
@@ -40,9 +41,7 @@ app.get('/', function(req, res, next) {
 });
 ```
 
-* Get the body of your request when using the **Node.js** framework **Express**
-
-`req.body` contain the posted data.
+* Get the news will run our main function to import news to **Wizyroom**
 
 ```javascript
 app.get('/news', function(req, res){
@@ -50,7 +49,7 @@ app.get('/news', function(req, res){
 });
 ```
 
-* Get you own [APIXU](https://www.apixu.com/) **API key** from [here](https://www.apixu.com/my) and replace it in the code above in `var apiKey`.
+* Get your own [APIXU](https://www.apixu.com/) **API key** from [here](https://www.apixu.com/my) and replace it in the code above in `var apiKey`.
 
 * This simple application will return weather for country specified by the user everytime the chatbot is triggered in **Wizyroom**
 
