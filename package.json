@@ -1,32 +1,33 @@
 {
   "name": "3.news-incoming-webhook",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "deploy": "gcloud app deploy"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/WizyRoom/3.news-incoming-webhook.git"
-  },
-  "keywords": [
-    "webhook",
-    "bot"
+  "description": "News Bot gets you news every hour",
+  "author": "Wizy.io",
+  "contributors": [
+    {
+      "name": "Maher",
+      "email": "maher@wizy.io"
+    }
   ],
-  "author": "wizy.io",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/WizyRoom/3.news-incoming-webhook/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WizyRoom/3.news-incoming-webhook"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "monitor": "nodemon app.js"
+  },
+  "keywords": [
+    "weather",
+    "bot"
+  ],
   "homepage": "https://github.com/WizyRoom/3.news-incoming-webhook#readme",
   "dependencies": {
-    "express": "^4.14.0",
-    "@google-cloud/datastore": "^0.1.1",
-    "body-parser": "^1.15.2",
-    "nconf": "^0.8.4",
-    "nodemailer": "^2.6.4",
+    "ejs": "~0.8.5",
+    "express": "~3.4.4",
     "request": "^2.75.0"
   }
-}
