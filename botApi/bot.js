@@ -6,9 +6,9 @@ module.exports = {
 	botMessage: function(message){
 
 		var postData = {
-		  'domain_id' : "<your teamdomain id>", // required
-		  'workroom_id' : "<room id to post>", // required
-		  'token' : "<Domain Token>", // required
+		  'domain_id' : "<your teamdomain id>", // required // can be found here https://app.wizyroom.io/admin/info below Account Details / teamdomain
+		  'workroom_id' : "<room id to post>", // required  // can be found in url when you access a room https://app.wizyroom.io/workroom/yourRoomID
+		  'token' : "<Domain Token>", // required           // can be found here https://app.wizyroom.io/admin/integrations/webhooks
 		  'body' : message // required
 		};
 
